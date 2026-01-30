@@ -6,8 +6,8 @@ This script for prepare data and parameters for parameter estimator.
 %}
 
 % R and L from experiment
-motor_R = 1.00;
-motor_L = 0.01;
+motor_R = 10.30982581;
+motor_L = 35.0259456;
 % Optimization's parameters
 motor_Eff = 0.5;
 motor_Ke = 0.05;
