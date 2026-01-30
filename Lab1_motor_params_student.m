@@ -17,7 +17,7 @@ motor_B = 0.0001;
 % Extract collected data
 Input = data{1}.Values.Data;
 Time = data{1}.Values.Time;
-Velo = double(data{2}.Values.Data);
+Velo = double(data{1}.Values.Data);
 
 % Plot 
 figure(Name='Motor velocity response')
