@@ -11,15 +11,7 @@ motor_L = 35.0259456;
 % Optimization's parameters
 motor_Eff = 0.96157;
 motor_Ke = 0.074986;
-motor_J = 1e-09;
-motor_B = 1.11e-05;
+motor_J = 0.001;
+motor_B = 0.0001;
 
-% Extract collected data
-Input = out.data.Data;
-Time = out.data.Time;
-Velo = double(out.data.Data);
-
-% Plot 
-figure(Name='Motor velocity response')
-plot(Time,Velo,Time,Input)
-
+fprintf('Motor parameters loaded. You can now run Simulink.\n');
