@@ -1,6 +1,6 @@
 %% --- 1. USER CONFIGURATION ---
 % Choose your source: 'PART2' for hardware data, 'MODEL' for simulation data
-SOURCE_TYPE = 'MODEL'; 
+SOURCE_TYPE = 'PART2'; 
 % Order must match your Multiport Switch in Simulink
 wave_names = {'Step', 'Ramp', 'Stair', 'Sine', 'Chirp'}; 
 PARENT_FOLDER = 'PART2_study';
