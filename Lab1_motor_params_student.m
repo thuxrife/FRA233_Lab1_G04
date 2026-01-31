@@ -9,9 +9,9 @@ This script for prepare data and parameters for parameter estimator.
 motor_R = 9.393179725;
 motor_L = 0.136562826;
 % Optimization's parameters
-motor_Eff = 0.5;
-motor_Ke = 0.05;
-motor_J = 0.001;
-motor_B = 0.0001;
+motor_Eff = 0.964637068303546;
+motor_Ke = 0.0558027813847964;
+motor_J = 3.27549608652329e-05;
+motor_B = 2.15556464347356e-05;
 
 fprintf('Motor parameters loaded. You can now run Simulink.\n');
