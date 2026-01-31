@@ -55,23 +55,26 @@ Input = data_obj.Data(:,1);
 Velo  = data_obj.Data(:,2); 
 
 %% --- 5. GENERATE & SAVE PLOT ---
-% Force the figure background to white ('Color', 'w')
+% 1. Create Figure with White Background
 fig = figure('Visible', 'off', 'Position', [100, 100, 900, 500], 'Color', 'w'); 
 
-% Force the axes background to white and grid lines to a visible gray
-ax = axes('Position', [0.1, 0.15, 0.65, 0.7], 'Color', 'w'); 
+% 2. Create Axes with White Background and Black Axis Lines
+ax = axes('Position', [0.1, 0.15, 0.65, 0.7], ...
+          'Color', 'w', ...      % Forces graph zone to white
+          'XColor', 'k', ...     % Forces X-axis and numbers to black
+          'YColor', 'k', ...     % Forces Y-axis and numbers to black
+          'GridColor', [0.3, 0.3, 0.3]); % Darker grid for better visibility on white
 
 plot(Time, Velo, 'b', 'LineWidth', 1.5); 
 grid on; 
-ax.GridColor = [0.15 0.15 0.15]; % Ensures grid is visible on white background
-ax.XColor = 'k'; % Force axis lines and labels to black
-ax.YColor = 'k';
+xlabel('Time (s)', 'Color', 'k'); 
+ylabel('Velocity (rad/s)', 'Color', 'k'); 
 
-xlabel('Time (s)'); 
-ylabel('Velocity (rad/s)'); 
-legend('Velocity (\omega)', 'Location', 'northeast', 'TextColor', 'k'); 
+% 3. Force Legend to have white background and black text
+legend('Velocity (\omega)', 'Location', 'northeast', ...
+       'Color', 'w', 'TextColor', 'k', 'EdgeColor', 'k'); 
 
-% Create a string containing all the motor parameters
+% 4. Create Parameter String
 param_text = sprintf(['Motor Parameters:\n', ...
     'R: %.4f \\Omega\n', ...
     'L: %.4f H\n', ...
@@ -81,13 +84,16 @@ param_text = sprintf(['Motor Parameters:\n', ...
     'B: %.4f'], ...
     motor_R, motor_L, motor_Eff, motor_Ke, motor_J, motor_B);
 
-% Place the parameter box outside
+% 5. Add Parameter Box (Force white background, black text/border)
 annotation('textbox', [0.78, 0.4, 0.18, 0.3], 'String', param_text, ...
     'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 9, ...
-    'EdgeColor', 'black', 'Color', 'k'); % 'Color', 'k' forces text to black
+    'EdgeColor', 'black', 'Color', 'k'); 
 
-title(ax, sprintf('%s - %s Velocity Response (Run %d)', source_prefix, current_wave, next_num), 'Color', 'k');
+% 6. Force Title to be black
+title(ax, sprintf('%s - %s Velocity Response (Run %d)', source_prefix, current_wave, next_num), ...
+      'Color', 'k');
 
+% Save as PNG (Ensures background color is preserved in the file)
 saveas(fig, fullfile(FINAL_SUBFOLDER_PATH, [current_wave '_Plot.png']));
 close(fig);
 
