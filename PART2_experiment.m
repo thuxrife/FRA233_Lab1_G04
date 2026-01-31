@@ -55,14 +55,21 @@ Input = data_obj.Data(:,1);
 Velo  = data_obj.Data(:,2); 
 
 %% --- 5. GENERATE & SAVE PLOT ---
-fig = figure('Visible', 'off', 'Position', [100, 100, 900, 500]); % Wider figure to fit box
-ax = axes('Position', [0.1, 0.15, 0.65, 0.7]); % Shrink graph to 65% width to make space
+% Force the figure background to white ('Color', 'w')
+fig = figure('Visible', 'off', 'Position', [100, 100, 900, 500], 'Color', 'w'); 
+
+% Force the axes background to white and grid lines to a visible gray
+ax = axes('Position', [0.1, 0.15, 0.65, 0.7], 'Color', 'w'); 
 
 plot(Time, Velo, 'b', 'LineWidth', 1.5); 
 grid on; 
+ax.GridColor = [0.15 0.15 0.15]; % Ensures grid is visible on white background
+ax.XColor = 'k'; % Force axis lines and labels to black
+ax.YColor = 'k';
+
 xlabel('Time (s)'); 
 ylabel('Velocity (rad/s)'); 
-legend('Velocity (\omega)', 'Location', 'northeast'); 
+legend('Velocity (\omega)', 'Location', 'northeast', 'TextColor', 'k'); 
 
 % Create a string containing all the motor parameters
 param_text = sprintf(['Motor Parameters:\n', ...
@@ -74,11 +81,12 @@ param_text = sprintf(['Motor Parameters:\n', ...
     'B: %.4f'], ...
     motor_R, motor_L, motor_Eff, motor_Ke, motor_J, motor_B);
 
-% Place the parameter box in the right-side white space (outside the axes)
+% Place the parameter box outside
 annotation('textbox', [0.78, 0.4, 0.18, 0.3], 'String', param_text, ...
-    'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 9, 'EdgeColor', 'black');
+    'FitBoxToText', 'on', 'BackgroundColor', 'white', 'FontSize', 9, ...
+    'EdgeColor', 'black', 'Color', 'k'); % 'Color', 'k' forces text to black
 
-title(ax, sprintf('%s - %s Velocity Response (Run %d)', source_prefix, current_wave, next_num));
+title(ax, sprintf('%s - %s Velocity Response (Run %d)', source_prefix, current_wave, next_num), 'Color', 'k');
 
 saveas(fig, fullfile(FINAL_SUBFOLDER_PATH, [current_wave '_Plot.png']));
 close(fig);
