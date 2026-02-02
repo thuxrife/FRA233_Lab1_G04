@@ -1,5 +1,5 @@
 %% --- 1. LOAD DATA ---
-filepath = 'PART2_study\part2_Ramp_1_2026-01-31_16-02\Ramp_Data.xlsx'; %
+filepath = 'C:\Users\User\Documents\GitHub\FRA233_Lab1_G04\PART2_studyV2\part2_Step_1_2026-01-31_20-36\Step_Data.xlsx'; %
 T = readtable(filepath); 
 
 fs = 1 / (T.Time_sec(2) - T.Time_sec(1)); % Sampling Frequency
@@ -7,7 +7,7 @@ y_raw = T.Speed_rad_s;
 
 %% --- 2. SIGNAL CONDITIONING (filtfilt) ---
 % Based on your FFT analysis, define the cutoff (e.g., 20Hz)
-fc = 20; 
+fc = 50; 
 [b, a] = butter(2, fc/(fs/2), 'low'); %
 
 % Apply zero-phase filter to a NEW variable
