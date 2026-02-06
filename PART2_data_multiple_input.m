@@ -1,14 +1,14 @@
 %% --- 1. SETUP PATHS AND PARAMETERS ---
-base_path = 'C:\Users\User\Documents\GitHub\FRA233_Lab1_G04\PART2_studyV3_12V\';
+base_path = 'C:\Users\User\Documents\GitHub\FRA233_Lab1_G04\PART2_studyV4_Synced_Speed\';
 
 % The names must match your Excel file prefixes exactly
 wave_names = {'Step', 'Ramp', 'Stair', 'Sine', 'Chirp'}; 
 
-folders = {'part2_Step_1_2026-02-03_20-29', ...
-           'part2_Ramp_1_2026-02-03_20-34', ...
-           'part2_Stair_1_2026-02-03_20-38', ...
-           'part2_Sine_1_2026-02-03_20-58', ...
-           'part2_Chirp_1_2026-02-03_21-35'};
+folders = {'part2_Step_1_2026-02-06_20-23', ...
+           'part2_Ramp_1_2026-02-06_20-25', ...
+           'part2_Stair_1_2026-02-06_20-26', ...
+           'part2_Sine_1_2026-02-06_20-32', ...
+           'part2_Chirp_1_2026-02-06_20-35'};
 
 % --- FILTER TOGGLE ---
 use_filter = false; % Recommended: set to true for better Parameter Estimation
@@ -19,7 +19,7 @@ fprintf('\n--- Processing Multi-Signal Data (Filter: %s) ---\n', string(use_filt
 
 for i = 1:5
     % LOGIC: Construct the filename using the wave_name (e.g., 'Step_Data.xlsx')
-    filename = [wave_names{i}, '_Data.xlsx'];
+    filename = [wave_names{i}, '_Synced.xlsx'];
     current_file = fullfile(base_path, folders{i}, filename);
     
     % Read the data

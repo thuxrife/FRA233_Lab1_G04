@@ -18,29 +18,29 @@ warning('off', 'Simulink:Commands:ParamUnknown');
 
 % --- 1. CONFIGURATION ------------------------------------------------
 model_name = 'Lab1_parameter_estimation_student';
-base_path_in = 'C:\Users\User\Documents\GitHub\FRA233_Lab1_G04\PART2_studyV2\';
+base_path_in = 'C:\Users\User\Documents\GitHub\FRA233_Lab1_G04\PART2_studyV3_Synced_Speed\';
 PARENT_FOLDER = 'PART2_result';
 
 wave_names = {'Step', 'Ramp', 'Stair', 'Sine', 'Chirp'};
 
-% folders_in = {'part2_Step_3_2026-01-31_20-37', ...
-%     'part2_Ramp_3_2026-01-31_20-40', ...
-%     'part2_Stair_3_2026-02-01_22-29', ...
-%     'part2_Sine_3_2026-01-31_20-54', ...
-%     'part2_Chirp_3_2026-01-31_20-59'};
 
+% folders_in = {'part2_Step_1_2026-02-06_20-23', ...
+%            'part2_Ramp_1_2026-02-06_20-25', ...
+%            'part2_Stair_1_2026-02-06_20-26', ...
+%            'part2_Sine_1_2026-02-06_20-32', ...
+%            'part2_Chirp_1_2026-02-06_20-35'};
+
+folders_in = {'part2_Step_3_2026-02-03_20-31', ...
+    'part2_Ramp_3_2026-02-03_20-35', ...
+    'part2_Stair_3_2026-02-03_20-41', ...
+    'part2_Sine_3_2026-02-03_20-58', ...
+    'part2_Chirp_3_2026-02-03_21-36'};
 
 % folders_in = {'part2_Step_2_2026-02-03_20-30', ...
 %               'part2_Ramp_2_2026-02-03_20-34', ...
 %               'part2_Stair_2_2026-02-03_20-40', ...
 %               'part2_Sine_2_2026-02-03_20-58', ...
 %               'part2_Chirp_2_2026-02-03_21-36'};
-
-% folders_in = {'part2_Step_1_2026-02-03_20-29', ...
-%           'part2_Ramp_1_2026-02-03_20-34', ...
-%           'part2_Stair_1_2026-02-03_20-38', ...
-%           'part2_Sine_1_2026-02-03_20-58', ...
-%           'part2_Chirp_1_2026-02-03_21-35'};
 
 param_files = {'Params_Step.mat'; 'Params_Ramp.mat'; 'Params_Stair.mat'; 'Params_Sine.mat'; 'Params_Chirp.mat'};
 
@@ -66,7 +66,7 @@ SimResults = struct();
 
 % --- 4. PHASE 1: SIMULATION (TEXT ONLY) ------------------------------
 fprintf('=== PHASE 1: RUNNING SIMULATIONS ===\n');
-fprintf('Using Fixed Electrical Params: R=2.7807, L=0.0396\n');
+fprintf('Using Fixed Electrical Params: R=3.399924458, L=0.002853248\n');
 fprintf('-----------------------------------------------------------\n');
 fprintf('| %-10s | %-10s | %-10s |\n', 'SOURCE', 'TARGET', 'RMSE');
 fprintf('-----------------------------------------------------------\n');
@@ -86,8 +86,8 @@ for src_idx = 1:5
     assignin('base', 'motor_Ke', p.motor_Ke);
 
     % USE YOUR SPECIFIC VALUES
-    assignin('base', 'motor_R', 2.780746939);
-    assignin('base', 'motor_L', 0.039595291);
+    assignin('base', 'motor_R', 3.399924458);
+    assignin('base', 'motor_L', 0.002853248);
 
     % Handle Efficiency/Friction safely
     if isfield(p, 'motor_Eff'), assignin('base', 'motor_Eff', p.motor_Eff); else, assignin('base', 'motor_Eff', 1.0); end
@@ -98,14 +98,16 @@ for src_idx = 1:5
         target_wave = wave_names{tgt_idx};
 
         % Load Data
-        data_file = fullfile(base_path_in, folders_in{tgt_idx}, [target_wave, '_Data.xlsx']);
+        data_file = fullfile(base_path_in, folders_in{tgt_idx}, [target_wave, '_Synced.xlsx']);
         T = readtable(data_file);
         y_real = T.Speed_rad_s; t_val = T.Time_sec; u_val = T.Voltage_V;
 
         % Setup Simulation
         assignin('base', 'u_sim_val', [t_val, u_val]);
         set_param(model_name, 'StopTime', num2str(t_val(end)));
-        set_param(model_name, 'SolverType', 'Fixed-step', 'Solver', 'ode14x', 'FixedStep', '1e-3');
+
+        % --- FIX: Changed Step Size to 0.0005 (500us) ---
+        set_param(model_name, 'SolverType', 'Fixed-step', 'Solver', 'ode14x', 'FixedStep', '0.0005');
         set_param(model_name, 'LoadExternalInput', 'on', 'ExternalInput', 'u_sim_val');
 
         try
